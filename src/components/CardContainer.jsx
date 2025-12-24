@@ -1,13 +1,25 @@
 import Card from "./Card";
 
-function CardContainer({ data }) {
-  console.log(data);
-
+function CardContainer({
+  data,
+  handleCheck,
+  status,
+  setStatus,
+  showMessage,
+  setShow,
+  handleResult,
+}) {
   return (
     <div className="card-container mt-5">
-      {data.map((item, index) => (
-        <Card item={item} key={index} />
-      ))}
+      <Card
+        data={data}
+        handleCheck={handleCheck}
+        status={status}
+        setStatus={setStatus}
+        showMessage={showMessage}
+        setShow={setShow}
+        handleResult={handleResult}
+      />
     </div>
   );
 }
