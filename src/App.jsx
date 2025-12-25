@@ -5,6 +5,7 @@ import Heading from "./components/Heading";
 import { useState } from "react";
 import { FaQuestion, FaRegUser } from "react-icons/fa";
 import { BiCategoryAlt } from "react-icons/bi";
+import GameEntry from "./components/GameEntry";
 
 function App() {
   const data = [
@@ -65,6 +66,14 @@ function App() {
   const [showMessage, setShowMessage] = useState(false);
   const [show, setShow] = useState(false);
   const [percentage, setPercentage] = useState(0);
+  const [indexData, setIndexData] = useState(0);
+  const [start, setStart] = useState(false);
+  const [displayBtn, setDisplayBtn] = useState("block");
+
+  const handleStart = () => {
+    setStart(true);
+    setDisplayBtn("none");
+  };
 
   const handleResult = () => {
     setShow(true);
@@ -79,32 +88,46 @@ function App() {
     } else {
       setStatus("wrong");
     }
+    setIndexData(next);
 
     if (next + 1 == data.length) {
       setShowMessage(true);
     }
   };
+
+  const handlePlayAgain = () => {
+    setDisplayBtn("block");
+    setStart(false);
+    setShow(false);
+  };
   return (
     <>
       {" "}
       <Heading />
-      <div className="main">
-        <CardContainer
-          data={data}
-          handleCheck={handleCheck}
-          status={status}
-          setStatus={setStatus}
-          showMessage={showMessage}
-          setShow={setShow}
-          handleResult={handleResult}
-        />
-      </div>
+      <GameEntry handleStart={handleStart} displayBtn={displayBtn} />
+      {start && (
+        <div className="main">
+          <CardContainer
+            data={data}
+            handleCheck={handleCheck}
+            status={status}
+            setStatus={setStatus}
+            showMessage={showMessage}
+            setShow={setShow}
+            handleResult={handleResult}
+            dataLen={dataLen}
+            indexData={indexData}
+          />
+        </div>
+      )}
       {show && (
         <div className="modal fade show d-block custom-modal" tabIndex="-1">
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <button className="btn btn-primary">Play Again</button>
+                <button className="btn btn-primary" onClick={handlePlayAgain}>
+                  Play Again
+                </button>
                 <button
                   className="btn-close"
                   onClick={() => setShow(false)}
@@ -145,7 +168,9 @@ function App() {
                 <div className="score-container mt-4">
                   <p className="text-center">
                     Your score is{" "}
-                    <span class="badge rounded-pill text-bg-info">{score}</span>
+                    <span className="badge rounded-pill text-bg-info">
+                      {score}
+                    </span>
                   </p>
                   {percentage >= 60 ? (
                     <p className="text-center alert alert-success">

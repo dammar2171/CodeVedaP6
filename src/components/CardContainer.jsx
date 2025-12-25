@@ -8,6 +8,8 @@ function CardContainer({
   showMessage,
   setShow,
   handleResult,
+  indexData,
+  dataLen,
 }) {
   return (
     <div className="card-container mt-5">
@@ -19,6 +21,8 @@ function CardContainer({
         showMessage={showMessage}
         setShow={setShow}
         handleResult={handleResult}
+        indexData={indexData}
+        dataLen={dataLen}
       />
     </div>
   );

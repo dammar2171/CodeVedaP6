@@ -9,16 +9,24 @@ const Card = ({
   showMessage,
   setShow,
   handleResult,
+  indexData,
+  dataLen,
 }) => {
   const [next, setNext] = useState(0);
+  const [buttonDisable, setButtonDisable] = useState("");
 
   const handleNext = () => {
-    setStatus(null);
-    setNext(next + 1);
+    if (next < data.length - 1) {
+      setStatus(null);
+      setNext(next + 1);
+    }
   };
 
   const handlePrevious = () => {
-    setNext(next - 1);
+    if (next > 0) {
+      setStatus(null);
+      setNext(next - 1);
+    }
   };
   return (
     <div className="card" style={{ width: "30rem", padding: "1rem" }}>
@@ -91,7 +99,7 @@ const Card = ({
         </button>
       </div>
       {showMessage && <Message setShow={setShow} handleResult={handleResult} />}
-      <Progressbar />
+      <Progressbar current={indexData} total={dataLen} />
     </div>
   );
 };
